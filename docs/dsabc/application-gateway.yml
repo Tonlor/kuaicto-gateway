@@ -1,0 +1,93 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    hostname: 172.19.71.10
+    serviceUrl:
+      defaultZone: http://172.19.71.10:8761/eureka/
+  instance:
+    preferIpAddress: true
+    instanceId: ${eureka.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+spring:
+  application:
+    name: kuaicto-gateway
+  cloud:
+    gateway:
+      default-filters:
+      - AddResponseHeader=X-SGW-Version, 1.0
+      routes:
+      # =====================================
+      - id: api_ecommerce
+        uri: lb://ecommerce-goods-orders
+        order: 0
+        predicates:
+        - Path=/api/ecommerce/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/ecommerce/(?<segment>.*), /$\{segment}
+      # =====================================
+      - id: api_ecommerce_ext
+        uri: lb://ecommerce-ext
+        order: 0
+        predicates:
+        - Path=/api/ecommerce-ext/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/ecommerce-ext/(?<segment>.*), /$\{segment}
+      # =====================================
+      - id: api_mall_auth
+        uri: lb://mall-user
+        order: 0
+        predicates:
+        - Path=/api/mall/auth/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/mall/auth/(?<segment>.*), /$\{segment}
+      # =====================================
+      - id: api_store_auth
+        uri: lb://store-user
+        order: 0
+        predicates:
+        - Path=/api/store/auth/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/store/auth/(?<segment>.*), /$\{segment}
+      # =====================================
+      - id: api_mall
+        uri: lb://dsabc-mall
+        order: 0
+        predicates:
+        - Path=/api/mall/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/mall/(?<segment>.*), /$\{segment}
+      # =====================================
+      - id: api_store
+        uri: lb://dsabc-store
+        order: 0
+        predicates:
+        - Path=/api/store/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/store/(?<segment>.*), /$\{segment}
+      # =====================================
+      - id: api_manager
+        uri: lb://dsabc-manager
+        order: 0
+        predicates:
+        - Path=/api/manager/**
+        filters:
+          #- GwAuth=lb://portal-manager-api/authApi
+          - GwRewritePath=/api/manager/(?<segment>.*), /$\{segment}
+      # =====================================          
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    com.kuaicto.gateway: DEBUG

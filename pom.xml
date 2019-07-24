@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.springframework.cloud.gateway</groupId>
+	<artifactId>kuaicto-gateway</artifactId>
+	<version>1.0.20</version>
+	<packaging>jar</packaging>
+
+	<name>kuaicto Gateway</name>
+	<description>kuaicto Gateway</description>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-gateway</artifactId>
+				<version>2.0.0.RC1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+ 		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+			<version>2.0.0.M2</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		-->
+		
+<!--		 
+ 		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-pool2</artifactId>
+		    <version>2.0</version>
+		</dependency>
+		<dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+ -->		 
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter</artifactId>
+			<version>2.0.0.M2</version>
+		</dependency>
+ 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+				
+ 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+ 		<dependency>
+			  <groupId>commons-collections</groupId>
+			  <artifactId>commons-collections</artifactId>
+			  <version>3.2.2</version>
+<!-- 		    <groupId>apache-collections</groupId>
+		    <artifactId>commons-collections</artifactId>
+		    <version>3.1</version>
+ -->		</dependency>
+		<dependency>
+		  <groupId>commons-lang</groupId>
+		  <artifactId>commons-lang</artifactId>
+		  <version>2.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.yaml</groupId>
+		    <artifactId>snakeyaml</artifactId>
+		    <version>1.19</version>
+		</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.projectreactor.ipc/reactor-netty -->
+<dependency>
+    <groupId>io.projectreactor.ipc</groupId>
+    <artifactId>reactor-netty</artifactId>
+    <version>0.7.7.RELEASE</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-core -->
+<dependency>
+    <groupId>io.projectreactor</groupId>
+    <artifactId>reactor-core</artifactId>
+    <version>3.1.7.RELEASE</version>
+</dependency>
+
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>com.kuaicto.gateway.Application</mainClass>
+								</manifest>
+							</archive>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+

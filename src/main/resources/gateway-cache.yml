@@ -1,0 +1,16 @@
+# 是否启用
+enabled: false
+
+# withCookie为true时使用
+cookieName: _MCH_AT
+
+items:
+  -
+    path: /gateway/test/1
+    method: GET
+    withCookie: true
+    timeout: 60000
+  -
+    path: regex=^/gateway/test/\d+$
+    method: GET
+    withCookie: false

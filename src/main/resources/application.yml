@@ -1,0 +1,50 @@
+server:
+  port: 8888
+
+#remote:
+#  hostport: httpbin.org:80
+#  hostport: remote-host:9000
+#  uri: http://${remote.hostport}
+
+spring:
+  application:
+    name: kuaicto-gateway
+  cloud:
+    gateway:
+      enabled: true
+      default-filters:
+      - GwDefault
+      - AddResponseHeader=X-SGW-Ver, 1.0
+
+      routes:
+      # =====================================
+      # to run server
+      # $ wscat --listen 9000
+      # to run client
+      # $ wscat --connect ws://localhost:8080/echo
+      - id: websocket_test
+        uri: ws://localhost:9000
+        order: 9000
+        predicates:
+        - Path=/echo
+
+eureka:
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://172.19.71.10:8761/eureka/
+#      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: INFO
+    com.kuaicto.gateway: DEBUG
+
+#management:
+#  context-path: /admin
+#  port: 8081

@@ -1,0 +1,40 @@
+enabled: false
+
+requestPerIp:
+  -
+    sleep: 60
+    path: /gateway/test
+    rules: 100/1;200/3
+
+resourcePerIp:
+  -
+    sleep: 60
+    path: /gateway/test
+    rules: 50/1;100/3
+
+requestPerCookie:
+  -
+    sleep: 10
+    path: /gateway/test
+    rules: 20/1;45/3
+
+resourcePerCookie:
+  -
+    sleep: 10
+    path: /gateway/test
+    rules: 10/1;15/3
+  -
+    async: false
+    sleep: 3
+    method: POST
+    path: regex=^/gateway/test/order$
+    rules: 1/3
+
+cookieName:
+  - _MCH_AT
+
+whitelist:
+  - 127.0.0.0
+
+blacklist:
+  - 1.1.1.1

@@ -1,0 +1,33 @@
+# 是否启用，总开关
+enabled: false
+
+# 是否是邮件发送监听器
+listener: true
+# 邮件标题前缀
+mailSubject: ALARM
+# 发件人
+mailFrom:
+  - noreply@kuaicto.com
+# 收件人
+#mailTo:
+#  - to@kuaicto.com
+# 抄送人
+#mailCc:
+#  - cc@kuaicto.com
+
+# HTTP 4xx 告警
+alarm4xxError: true
+# HTTP 5xx 告警
+alarm5xxError: true
+
+
+# 慢请求告警
+alarmSlowApi: true
+# 慢请求配置
+slowApiConfigItems:
+  -
+    path: /api/operation
+    time: 1000
+  -
+    path: /api/
+    time: 1000
